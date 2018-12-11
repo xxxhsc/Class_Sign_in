@@ -10,12 +10,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     android:weightSum="1"
+    android:gravity="center"
     tools:context=".RegisterActivity">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height_normal"
-        >
+        android:layout_width="258dp"
+        android:layout_height="51dp">
 
         <ImageView
             android:id="@+id/img_account"
@@ -25,7 +25,7 @@
             android:layout_marginBottom="@dimen/margin_tiny"
             android:layout_marginLeft="@dimen/margin_tiny"
             android:scaleType="fitXY"
-            android:src="@drawable/icon_login_account"/>
+            android:src="@drawable/icon_login_account" />
 
         <EditText
             android:id="@+id/resetpwd_edit_name"
@@ -41,7 +41,7 @@
             android:maxLines="1"
             android:textColor="@android:color/black"
             android:textColorHint="@color/tv_gray_deep"
-            android:textSize="@dimen/text_size_normal"/>
+            android:textSize="@dimen/text_size_normal" />
 
         <View
             android:layout_width="match_parent"
@@ -49,11 +49,11 @@
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="@dimen/margin_normal"
             android:layout_toRightOf="@+id/img_account"
-            android:background="@color/orange_light"/>
+            android:background="@color/orange_light" />
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="258dp"
         android:layout_height="@dimen/item_height_normal">
 
         <ImageView
@@ -101,7 +101,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="258dp"
         android:layout_height="@dimen/item_height_normal">
 
         <ImageView
@@ -149,7 +149,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-    android:layout_width="match_parent"
+    android:layout_width="258dp"
     android:layout_height="@dimen/item_height_normal"
     >
 
@@ -189,7 +189,7 @@
 </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="258dp"
         android:layout_height="@dimen/item_height_normal"
         >
 
@@ -228,31 +228,64 @@
             android:background="@color/orange_light"/>
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/register_btn_sure"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_large"
-        android:layout_marginRight="@dimen/margin_large"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:paddingBottom="@dimen/margin_small"
-        android:paddingTop="@dimen/margin_small"
-        android:text="@string/register_btn_sure"
-        android:background="@drawable/btn_orange_selector"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/text_size_normal"/>
-    <Button
-        android:id="@+id/register_btn_cancel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_large"
-        android:layout_marginRight="@dimen/margin_large"
-        android:layout_marginTop="@dimen/margin_tiny"
-        android:paddingBottom="@dimen/margin_small"
-        android:paddingTop="@dimen/margin_small"
-        android:text="@string/register_btn_cancel"
-        android:background="@drawable/btn_orange_selector"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/text_size_normal"/>
+        android:layout_height="148dp">
+
+        <Button
+            android:id="@+id/register_btn_sure"
+            android:layout_width="164dp"
+            android:layout_height="34dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/btn_orange_selector"
+            android:paddingBottom="@dimen/margin_small"
+            android:paddingTop="@dimen/margin_small"
+            android:text="@string/register_btn_sure"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_normal" />
+
+        <Button
+            android:id="@+id/register_btn_cancel"
+            android:layout_width="164dp"
+            android:layout_height="34dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/btn_orange_selector"
+            android:paddingBottom="@dimen/margin_small"
+            android:paddingTop="@dimen/margin_small"
+            android:text="@string/register_btn_cancel"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_normal" />
+
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="20dp"
+            android:layout_toStartOf="@+id/register_btn_sure"
+            android:thumbTint="@color/orange_light" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/switch1"
+            android:layout_marginEnd="25dp"
+            android:layout_toStartOf="@+id/switch1"
+            android:text="学生"
+             android:textSize="20dp"/>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView"
+            android:layout_marginStart="25dp"
+            android:layout_toEndOf="@+id/switch1"
+            android:text="老师"
+            android:textSize="20dp"/>
+    </RelativeLayout>
 
 </LinearLayout>

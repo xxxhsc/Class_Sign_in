@@ -46,7 +46,7 @@
 
     <!-- 适配尺寸 -->
 
-  <!--  <dimen name="dp_0.1">0.1dp</dimen>
+    <!--  <dimen name="dp_0.1">0.1dp</dimen>
     <dimen name="dp_0.5">0.5dp</dimen>-->
     <dimen name="dp_1">1dp</dimen>
     <dimen name="dp_2">2dp</dimen>
@@ -226,9 +226,7 @@
     <dimen name="dp_800">800dp</dimen>
     <dimen name="drawer_width">240dp</dimen>
     <dimen name="iv_width">20dp</dimen>
-
-
-
+    <dimen name="text_margin">16dp</dimen>
 
 
 </resources>
