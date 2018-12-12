@@ -25,7 +25,8 @@
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name="com.example.sutdent.Stu_MainActivity"></activity>
+        <activity android:name="com.example.sutdent.Stu_MainActivity"/>
+        <activity android:name="com.example.teacher.Tch_MainActivity"/>
     </application>
 
 </manifest>

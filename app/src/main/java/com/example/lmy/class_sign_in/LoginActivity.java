@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 
 import com.example.sutdent.Stu_MainActivity;
+import com.example.teacher.Tch_MainActivity;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
@@ -219,19 +220,31 @@ public class LoginActivity extends AppCompatActivity{
             //判断账号和密码
             String username = et_name.getText().toString().trim();
             String password = et_password.getText().toString().trim();
-            User user = new User();
+            final BmobUser user = new User();
             user.setUsername(username);
             user.setPassword(password);
             user.login(new SaveListener<BmobUser>() {
                 @Override
                 public void done(BmobUser bmobUser,BmobException e){
                     if (e==null){
-                        showToast(bmobUser.getUsername()+"登录成功！");
-                        loadCheckBoxState();//记录下当前用户记住密码和自动登录的状态;
-                        Log.e("登录成功",bmobUser.getUsername(),e);
-                        startActivity(new Intent(LoginActivity.this, Stu_MainActivity.class));
-                        finish();//关闭页面
-                    }else {
+                        User userInfo = BmobUser.getCurrentUser(User.class);//获取当前用户数据对象；
+
+                        if(userInfo.getIdentity())
+                        {
+                            showToast(bmobUser.getUsername()+"登录成功！");
+                            loadCheckBoxState();//记录下当前用户记住密码和自动登录的状态;
+                            Log.e("登录成功", bmobUser.getUsername(), e);
+                            startActivity(new Intent(LoginActivity.this, Tch_MainActivity.class));
+                            finish();//关闭页面
+                        }
+                            else{
+                            showToast(bmobUser.getUsername()+"登录成功！");
+                            loadCheckBoxState();//记录下当前用户记住密码和自动登录的状态;
+                            Log.e("登录成功", bmobUser.getUsername(), e);
+                            startActivity(new Intent(LoginActivity.this, Stu_MainActivity.class));
+                            finish();//关闭页面
+                        }
+                    } else {
                         showToast("登录失败，用户名或密码不正确！");
                         Log.e("登录失败","原因：",e);
                     }

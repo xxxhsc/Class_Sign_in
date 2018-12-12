@@ -94,9 +94,15 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void done(BmobUser bmobUser, BmobException e){
                     if (e==null){
-                        showToast("注册成功！");
-                        startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                        finish();//关闭页面
+                        if(user.getIdentity()) {
+                            showToast("注册成功！");
+                            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                            finish();//关闭页面
+                        }else{
+                            showToast("注册成功！");
+                            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                            finish();//关闭页面
+                        }
                     }else {
                         showToast("注册失败！");
                         Log.e("注册失败","原因：",e);
