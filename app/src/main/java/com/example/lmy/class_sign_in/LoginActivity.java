@@ -73,8 +73,16 @@ public class LoginActivity extends AppCompatActivity{
         }
         //判断是否记住密码
         if (remenberPassword()) {
-            checkBox_password.setChecked(true);//勾选记住密码
-            setTextNameAndPassword();//把密码和账号输入到输入框中
+            //判断用户是否为退出登录之后再登录
+            if(exitLogin()) {
+                checkBox_password.setChecked(false);//取消记住密码的复选框
+                checkBox_login.setChecked(false);//取消自动登录的复选框
+                et_name.setText("");
+                et_password.setText("");
+            }else{
+                checkBox_password.setChecked(true);//勾选记住密码
+                setTextNameAndPassword();//把密码和账号输入到输入框中
+            }
         } else {
             setTextName();//把用户账号放到输入账号的输入框中
         }
@@ -91,7 +99,6 @@ public class LoginActivity extends AppCompatActivity{
                 checkBox_login.setChecked(true);
                 login();//去登录就可以
             }
-
 
         }
     }
