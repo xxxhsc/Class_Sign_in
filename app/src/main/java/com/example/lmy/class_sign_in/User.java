@@ -2,10 +2,11 @@ package com.example.lmy.class_sign_in;
 
 import cn.bmob.v3.BmobUser;
 
-public class Student extends BmobUser {
+public class User extends BmobUser {
 
     private String studentid;                       //用户学号
     private String realname;                   //用户姓名
+    private Boolean identity;                   //用户身份
 
     //获取用户学号
     public String getStudentid() {                   //获取用户学号
@@ -23,5 +24,12 @@ public class Student extends BmobUser {
     public void setRealname(String realname) {       //输入用户姓名
         this.realname = realname;
     }
-
+    //获取身份
+    public Boolean getIdentity(){
+        return identity;
+    }
+    //设置用户身份
+    public void setIdentity(Boolean identity){
+        this.identity=identity;
+    }
 }

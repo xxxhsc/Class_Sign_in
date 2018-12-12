@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.sutdent.Stu_MainActivity;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
@@ -72,8 +73,17 @@ public class LoginActivity extends AppCompatActivity{
 
         //判断是否自动登录
         if (autoLogin()) {
-            checkBox_login.setChecked(true);
-            login();//去登录就可以
+            //判断用户是否为退出登录之后再登录
+            if(exitLogin()) {
+                checkBox_password.setChecked(false);//取消记住密码的复选框
+                checkBox_login.setChecked(false);//取消自动登录的复选框
+                et_name.setText("");
+                et_password.setText("");
+            }else{
+                checkBox_login.setChecked(true);
+                login();//去登录就可以
+            }
+
 
         }
     }
@@ -155,6 +165,16 @@ public class LoginActivity extends AppCompatActivity{
         }
         return false;
     }
+    //判断用户是否为退出登录之后再登录
+    private boolean exitLogin(){
+        Intent intent = getIntent();
+        String exit = intent.getStringExtra("exit");
+        boolean exitLogin = false;
+        if (exit!=null){
+            exitLogin=true;
+        }
+        return exitLogin;
+    }
 
     CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
@@ -199,16 +219,17 @@ public class LoginActivity extends AppCompatActivity{
             //判断账号和密码
             String username = et_name.getText().toString().trim();
             String password = et_password.getText().toString().trim();
-            Student student = new Student();
-            student.setUsername(username);
-            student.setPassword(password);
-            student.login(new SaveListener<BmobUser>() {
+            User user = new User();
+            user.setUsername(username);
+            user.setPassword(password);
+            user.login(new SaveListener<BmobUser>() {
                 @Override
                 public void done(BmobUser bmobUser,BmobException e){
                     if (e==null){
                         showToast(bmobUser.getUsername()+"登录成功！");
                         loadCheckBoxState();//记录下当前用户记住密码和自动登录的状态;
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        Log.e("登录成功",bmobUser.getUsername(),e);
+                        startActivity(new Intent(LoginActivity.this, Stu_MainActivity.class));
                         finish();//关闭页面
                     }else {
                         showToast("登录失败，用户名或密码不正确！");

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import cn.bmob.v3.BmobUser;
@@ -26,6 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button mCancelButton;                     //取消按钮
     private ImageView iv_see_password;              //密码隐藏或显示
     private ImageView iv_see_password2;             //密码隐藏或显示
+    private Switch mswitch;                         //身份开关  1为老师  0为学生
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,8 @@ public class RegisterActivity extends AppCompatActivity {
         mRealN = (EditText)findViewById(R.id.resetpwd_edit_realName);
         iv_see_password = (ImageView) findViewById(R.id.iv_see_password);
         iv_see_password2 = (ImageView) findViewById(R.id.iv_see_password2);
+        mswitch = findViewById(R.id.switch1);
+
 
         mSureButton = (Button) findViewById(R.id.register_btn_sure);
         mCancelButton = (Button) findViewById(R.id.register_btn_cancel);
@@ -76,13 +80,17 @@ public class RegisterActivity extends AppCompatActivity {
             String userPwdCheck = mPwdCheck.getText().toString().trim();
             String userStuId = mStuId.getText().toString().trim();
             String userRealN = mRealN.getText().toString().trim();
+            Boolean identity=mswitch.isChecked();
 
-            Student student = new Student();
-            student.setUsername(userName);
-            student.setPassword(userPwd);
-            student.setRealname(userRealN);
-            student.setStudentid(userStuId);
-            student.signUp(new SaveListener<BmobUser>() {
+            final User user = new User();
+            user.setUsername(userName);
+            user.setPassword(userPwd);
+            user.setRealname(userRealN);
+            user.setStudentid(userStuId);
+            user.setIdentity(identity);
+
+
+            user.signUp(new SaveListener<BmobUser>() {
                 @Override
                 public void done(BmobUser bmobUser, BmobException e){
                     if (e==null){
