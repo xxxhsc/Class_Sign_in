@@ -1,11 +1,13 @@
 package com.example.lmy.class_sign_in;
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -53,6 +55,11 @@ public class LoginActivity extends AppCompatActivity{
         checkBox_login.setOnCheckedChangeListener(onCheckedChangeListener);
         iv_see_password.setOnClickListener(m_login_Listener);
         register.setOnClickListener(m_login_Listener);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
 
         initData();
 

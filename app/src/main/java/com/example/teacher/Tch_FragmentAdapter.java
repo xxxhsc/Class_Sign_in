@@ -1,10 +1,10 @@
-package com.example.sutdent;
-
-import java.util.List;
+package com.example.teacher;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import java.util.List;
 
 /**
  * Created by 何盛昌 on 2018/12/11.
@@ -13,15 +13,15 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 
 
-public class FragmentAdapter extends FragmentPagerAdapter {
+public class Tch_FragmentAdapter extends FragmentPagerAdapter {
 
     private List<Fragment> fragments; //Fragment集合
 
-    public FragmentAdapter(FragmentManager fm) {
+    public Tch_FragmentAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    public FragmentAdapter(FragmentManager fm, List<Fragment> fragments) {
+    public Tch_FragmentAdapter(FragmentManager fm, List<Fragment> fragments) {
         super(fm);
         this.fragments = fragments;
     }

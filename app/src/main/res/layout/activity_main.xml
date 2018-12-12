@@ -5,6 +5,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:clipToPadding="false"
+        android:fitsSystemWindows="true"
         tools:context=".MainActivity" >
 
         <android.support.v4.view.ViewPager
@@ -29,10 +31,22 @@
                 android:layout_weight="1"
                 android:button="@null"
                 android:drawablePadding="5dp"
-
+                android:src="@drawable/radiobtn_selector"
                 android:gravity="center"
                 android:paddingLeft="0dp"
                 android:text="首页" />
+
+            <RadioButton
+                android:id="@+id/main_sign_in"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawablePadding="5dp"
+                android:src="@drawable/radiobtn_selector"
+                android:gravity="center"
+                android:paddingLeft="0dp"
+                android:text="签到" />
 
             <RadioButton
                 android:id="@+id/main_user"
@@ -41,7 +55,7 @@
                 android:layout_weight="1"
                 android:button="@null"
                 android:drawablePadding="5dp"
-
+                android:src="@drawable/radiobtn_selector"
                 android:gravity="center"
                 android:paddingLeft="0dp"
                 android:text="我的"

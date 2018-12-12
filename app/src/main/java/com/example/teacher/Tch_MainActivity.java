@@ -6,11 +6,13 @@ package com.example.teacher;
  */
 
 
+import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -24,6 +26,7 @@ public class Tch_MainActivity extends FragmentActivity implements ViewPager.OnPa
     //定义Fragment
     private Fragment fragment_teacher1;
     private Fragment fragment_teacher2;
+    private Fragment fragment_teacher3;
 
 
     //定义FragmentManager
@@ -32,7 +35,7 @@ public class Tch_MainActivity extends FragmentActivity implements ViewPager.OnPa
     //    定义组件
     private ViewPager viewPager;
     private List<Fragment> fragmentList;
-    private FragmentAdapter fragmentAdapter;
+    private Tch_FragmentAdapter tchFragmentAdapter;
     private RadioGroup radioGroup;
     private RadioButton home;
 
@@ -40,6 +43,10 @@ public class Tch_MainActivity extends FragmentActivity implements ViewPager.OnPa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
         init();
         initViewPager();
 
@@ -47,12 +54,14 @@ public class Tch_MainActivity extends FragmentActivity implements ViewPager.OnPa
     }
 
     private  void   initViewPager(){
-        fragment_teacher1= new FragmentHome();
-        fragment_teacher2= new FragmentInfo();
+        fragment_teacher1= new Tch_FragmentHome();
+        fragment_teacher2= new Tch_FragmentSign_in();
+        fragment_teacher3= new Tch_FragmentInfo();
 
         fragmentList = new ArrayList<Fragment>();
         fragmentList.add(fragment_teacher1);
         fragmentList.add(fragment_teacher2);
+        fragmentList.add(fragment_teacher3);
 
 
         // 获取Fragmentmanager对象
@@ -60,9 +69,9 @@ public class Tch_MainActivity extends FragmentActivity implements ViewPager.OnPa
         fragmentManager =getSupportFragmentManager();
         // 获取fragmentAdapter对象
 
-        fragmentAdapter=new FragmentAdapter(fragmentManager,fragmentList);
+        tchFragmentAdapter =new Tch_FragmentAdapter(fragmentManager,fragmentList);
 
-        viewPager.setAdapter(fragmentAdapter);
+        viewPager.setAdapter(tchFragmentAdapter);
         //设置ViewPager默认显示第一个View
         viewPager.setCurrentItem(0);
         //设置第一个RadioButton为默认选中状态
@@ -97,6 +106,9 @@ public class Tch_MainActivity extends FragmentActivity implements ViewPager.OnPa
                 radioGroup.check(R.id.main_home);
                 break;
             case 1:
+                radioGroup.check(R.id.main_sign_in);
+                break;
+            case 2:
                 radioGroup.check(R.id.main_user);
                 break;
         }
@@ -114,8 +126,11 @@ public class Tch_MainActivity extends FragmentActivity implements ViewPager.OnPa
                 //显示第一个Fragment并关闭动画效果
                 viewPager.setCurrentItem(0,false);
                 break;
-            case R.id.main_user: // 我的信息
+            case R.id.main_sign_in: // 我的信息
                 viewPager.setCurrentItem(1,false);
+                break;
+            case R.id.main_user: // 我的信息
+                viewPager.setCurrentItem(2,false);
                 break;
 
         }

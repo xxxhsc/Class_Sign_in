@@ -12,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.example.sutdent.Stu_MainActivity;
+import com.example.teacher.Tch_MainActivity;
+
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
@@ -94,13 +97,13 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void done(BmobUser bmobUser, BmobException e){
                     if (e==null){
-                        if(user.getIdentity()) {
+                        if(user.getIdentity()) {//老师
                             showToast("注册成功！");
-                            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                            startActivity(new Intent(RegisterActivity.this, Tch_MainActivity.class));
                             finish();//关闭页面
                         }else{
                             showToast("注册成功！");
-                            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                            startActivity(new Intent(RegisterActivity.this, Stu_MainActivity.class));
                             finish();//关闭页面
                         }
                     }else {
