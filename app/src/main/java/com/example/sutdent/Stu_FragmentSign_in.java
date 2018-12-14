@@ -1,12 +1,14 @@
 package com.example.sutdent;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,22 +16,39 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.location.Poi;
+import com.example.lmy.class_sign_in.Course;
+import com.example.lmy.class_sign_in.CourseList;
+import com.example.lmy.class_sign_in.Kouling;
+import com.example.lmy.class_sign_in.KoulingList;
 import com.example.lmy.class_sign_in.R;
+import com.example.lmy.class_sign_in.User;
 
 import java.util.List;
 
-import static cn.bmob.v3.Bmob.getApplicationContext;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.QueryListener;
+import cn.bmob.v3.listener.SaveListener;
 
-/**
- * Created by 何盛昌 on 2018/12/12.
- */
+import static cn.bmob.v3.Bmob.getApplicationContext;
 
 public class Stu_FragmentSign_in extends Fragment{
 
     public LocationClient mLocationClient = null;
     public BDLocationListener myListener = new MyLocationListener();
-    TextView tv1;
+
+    private String get_address;
+    private TextView tv1;
+    private EditText input_kouling;
+    private String in_kouling;
+    private String realkouling;
+    private TextView kouling_info;
+    private TextView signin_view;
+    private User Stuinfo;
+    private String stu_id;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,12 +58,177 @@ public class Stu_FragmentSign_in extends Fragment{
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        tv1 = getActivity().findViewById(R.id.tv1);
-        Button getLocation = getActivity().findViewById(R.id.getLocation);
-        getLocation.setOnClickListener(new View.OnClickListener() {
+        final Button Sign_in = getActivity().findViewById(R.id.Sign_in);
+        Button View_Signin = getActivity().findViewById(R.id.View_Signin);
+        kouling_info = getActivity().findViewById(R.id.kouling_info);
+        signin_view = getActivity().findViewById(R.id.signin_view);
+
+        //获取定位
+        startLocate();
+
+        //显示口令信息
+        showKouling();
+
+        //签到
+        Sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startLocate();
+                View view = getLayoutInflater().inflate(R.layout.signin_dialog, null);
+                final EditText tv_cno = (EditText) view.findViewById(R.id.tv_cno);
+                final EditText tv_kouling = (EditText) view.findViewById(R.id.tv_kouling);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("请输入要签到的课程课号和口令")
+                        .setView(view)
+                        .setNegativeButton("取消", null)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                final String cno = tv_cno.getText().toString();
+                                final String kling = tv_kouling.getText().toString();
+                                if (cno != null && !cno.isEmpty() && kling != null && !kling.isEmpty()){
+
+                                    final BmobQuery<CourseList> querycourse = new BmobQuery<CourseList>();
+                                    querycourse.addWhereEqualTo("studentid",stu_id);
+                                    querycourse.findObjects(new FindListener<CourseList>() {
+                                        @Override
+                                        public void done(List<CourseList> list, BmobException e) {
+                                            if (e == null){
+                                                for (CourseList courseList : list){
+                                                    final String courseno = courseList.getCourseno();
+                                                    if (cno.equals(courseno)){
+                                                        BmobQuery<Kouling> koulingBmobQuery = new BmobQuery<Kouling>();
+                                                        koulingBmobQuery.addWhereEqualTo("courseno",courseno);
+                                                        koulingBmobQuery.findObjects(new FindListener<Kouling>() {
+                                                            @Override
+                                                            public void done(List<Kouling> list, BmobException e) {
+                                                                if (e == null){
+                                                                    String ckouling = null;
+                                                                    for (Kouling kouling : list){
+                                                                         ckouling= kouling.getKouling();
+                                                                        if (kling.equals(ckouling)){
+                                                                            KoulingList koulingList = new KoulingList();
+                                                                            koulingList.setStudentid(stu_id);
+                                                                            koulingList.setCourseno(cno);
+                                                                            koulingList.setKouling(kling);
+                                                                            koulingList.setLocation(get_address);
+                                                                            koulingList.setTeacherid(kouling.getTeacherid());
+                                                                            koulingList.save(new SaveListener<String>() {
+                                                                                @Override
+                                                                                public void done(String s, BmobException e) {
+                                                                                    if (e == null){
+                                                                                        showSignin();
+                                                                                        Toast.makeText(getActivity(),"签到成功！",Toast.LENGTH_SHORT).show();
+                                                                                    }else{
+                                                                                        Toast.makeText(getActivity(),"签到失败，请重试！",Toast.LENGTH_SHORT).show();
+                                                                                        return;
+                                                                                    }
+                                                                                }
+                                                                            });
+                                                                            return;
+                                                                        }else {
+                                                                            continue;
+                                                                        }
+                                                                    }
+                                                                }else {
+                                                                    Toast.makeText(getActivity(),"查询不到口令！",Toast.LENGTH_SHORT).show();
+                                                                    return;
+                                                                }
+                                                            }
+                                                        });
+                                                    }else {
+                                                        continue;
+                                                    }
+                                                }
+
+                                            }else {
+                                                Toast.makeText(getActivity(),"还没有选择课程！",Toast.LENGTH_SHORT).show();
+                                            }
+
+                                        }
+                                    });
+
+                                }else if (cno.equals("") || kling.equals("")){
+                                    Toast.makeText(getActivity(),"输入为空，请重新输入！",Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                                dialog.dismiss();
+                            }
+                        }).create().show();
+
+            }
+        });
+
+        //查看签到信息
+        View_Signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSignin();
+            }
+        });
+
+    }
+
+
+
+    private void showKouling(){
+        //显示口令信息
+        final StringBuffer sb = new StringBuffer(256);
+        Stuinfo = BmobUser.getCurrentUser(User.class);//获取当前用户用户名
+        stu_id = Stuinfo.getUserid();
+        BmobQuery<CourseList> querycourse = new BmobQuery<CourseList>();
+        querycourse.addWhereEqualTo("studentid",stu_id);
+        querycourse.findObjects(new FindListener<CourseList>() {
+            @Override
+            public void done(List<CourseList> list, BmobException e) {
+                if (e == null){
+                    for (CourseList courseList : list){
+                        final String cno = courseList.getCourseno();
+                        BmobQuery<Kouling> querykouling = new BmobQuery<Kouling>();
+                        querykouling.addWhereEqualTo("courseno",cno);
+                        querykouling.findObjects(new FindListener<Kouling>() {
+                            @Override
+                            public void done(List<Kouling> list, BmobException e) {
+                                if (e == null){
+                                    for (Kouling kouling : list){
+                                        String ckouling = kouling.getKouling();
+                                        sb.append("课号：" +cno +"\n" + "口令：" + ckouling + "\n");
+                                    }
+                                    kouling_info.setText(sb);
+                                }else {
+                                    Toast.makeText(getActivity(),"老师还没有发布签到！",Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+                        });
+
+                    }
+
+                }else {
+                    Toast.makeText(getActivity(),"还没有选择课程！",Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+    }
+
+    //签到信息
+    private void showSignin(){
+        signin_view.setText("");
+        final StringBuffer sb2 = new StringBuffer(256);
+        BmobQuery<KoulingList> querycourse = new BmobQuery<KoulingList>();
+        querycourse.addWhereEqualTo("studentid",stu_id);
+        querycourse.findObjects(new FindListener<KoulingList>() {
+            @Override
+            public void done(List<KoulingList> list, BmobException e) {
+                if (e == null){
+                    for (KoulingList koulinglist : list){
+                        sb2.append("教师工号：" +koulinglist.getTeacherid() +"\n" + "口令：" + koulinglist.getKouling() + "\n"+ "位置：" + koulinglist.getLocation() + "\n");
+                    }
+                    signin_view.setText(sb2);
+                }else {
+                    Toast.makeText(getActivity(),"查询失败！",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
@@ -76,20 +260,25 @@ public class Stu_FragmentSign_in extends Fragment{
     private class MyLocationListener implements BDLocationListener {
         @Override
         public void onReceiveLocation(BDLocation location) {
+
+
+
+            //再完善一下，根据原先很多定位方式那里，申请权限什么的
+
+
+
             if (location != null){
                 // 根据BDLocation 对象获得经纬度以及详细地址信息
-                double latitude = location.getLatitude();
-                double longitude = location.getLongitude();
                 String address = location.getAddrStr();
                 if (address != null){
-                    tv1.append("address:" + address + " \nlatitude:" + latitude
-                            + " \nlongitude:" + longitude + "---");
+                    get_address = address;
                     // 获得位置之后停止定位
                     mLocationClient.stop();
+
                 }
 
             }else {
-                tv1.append( "无法定位");
+                Toast.makeText(getActivity(),"无法定位！",Toast.LENGTH_SHORT).show();
                 return ;
             }
 
