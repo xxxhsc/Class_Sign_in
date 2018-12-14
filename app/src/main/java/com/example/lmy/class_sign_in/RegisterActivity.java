@@ -85,16 +85,6 @@ public class RegisterActivity extends AppCompatActivity {
             String userRealN = mRealN.getText().toString().trim();
             Boolean identity=mswitch.isChecked();
 
-            /*final Student student = new Student();
-            student.setUsername(userName);
-            student.setPassword(userPwd);
-            student.setRealname(userRealN);
-            student.setStudentid(userStuId);
-
-            student.signUp(new  SaveListener<String>(){
-
-            });*/
-
             final User user = new User();
             user.setUsername(userName);
             user.setPassword(userPwd);

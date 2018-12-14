@@ -28,6 +28,7 @@ public class Stu_FragmentHome extends Fragment {
 
     private User Stuinfo;
     private TextView course_info;
+    private TextView select_info;
     private String stu_id;
 
     @Override
@@ -42,6 +43,7 @@ public class Stu_FragmentHome extends Fragment {
         Button course_select = getActivity().findViewById(R.id.course_select);
         Button all_select = getActivity().findViewById(R.id.all_select);
         course_info = getActivity().findViewById(R.id.course_info);
+        select_info = getActivity().findViewById(R.id.select_info);
 
         //显示课程信息
         showCourse();
@@ -78,6 +80,7 @@ public class Stu_FragmentHome extends Fragment {
                                                             @Override
                                                             public void done(String s, BmobException e) {
                                                                 if (e == null){
+                                                                    showSelect();
                                                                     Toast.makeText(getActivity(),"选课成功！",Toast.LENGTH_SHORT).show();
                                                                 }else{
                                                                     Toast.makeText(getActivity(),"选课失败，请重试！",Toast.LENGTH_SHORT).show();
@@ -88,7 +91,6 @@ public class Stu_FragmentHome extends Fragment {
                                                         return;
                                                     }else {
                                                         continue;
-                                                       /* Toast.makeText(getActivity(),"找不到此课号，请重新输入！" + e.getMessage(),Toast.LENGTH_SHORT).show();*/
                                                     }
                                                 }
 
@@ -140,6 +142,8 @@ public class Stu_FragmentHome extends Fragment {
     }
 
     private void showSelect(){
+
+        select_info.setText("");
         //显示已选课程信息
         final StringBuffer sb = new StringBuffer(256);
         Stuinfo = BmobUser.getCurrentUser(User.class);//获取当前用户用户名
@@ -151,26 +155,29 @@ public class Stu_FragmentHome extends Fragment {
             public void done(List<CourseList> list, BmobException e) {
                 if (e == null){
                     for (CourseList courseList : list){
-
+                        String cno = courseList.getCourseno();
+                        BmobQuery<Course> courseBmobQuery = new BmobQuery<Course>();
+                        courseBmobQuery.addWhereEqualTo("courseno",cno);
+                        courseBmobQuery.findObjects(new FindListener<Course>() {
+                            @Override
+                            public void done(List<Course> list, BmobException e) {
+                                if (e == null){
+                                    for (Course course : list){
+                                        sb.append("课程名称：" +course.getCoursename() +"\n" + "课号：" + course.getCourseno() + "\n" + "教师工号：" + course.getTeacherid() + "\n");
+                                    }
+                                    select_info.setText(sb);
+                                }else {
+                                    Toast.makeText(getActivity(),"课程查询失败！",Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
 
                     }
+                }else {
+                    Toast.makeText(getActivity(),"未选修任何课程！",Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
-        /*querycourse.findObjects(new FindListener<Course>() {
-            @Override
-            public void done(List<Course> list, BmobException e) {
-                if (e == null){
-                    for (Course course : list){
-                        sb.append("课程名称：" +course.getCoursename() +"\n" + "课号：" + course.getCourseno() + "\n" + "教师工号：" + course.getTeacherid() + "\n");
-                    }
-                    course_info.setText(sb);
-                }else {
-                    Toast.makeText(getActivity(),"查询失败！" + e.getMessage(),Toast.LENGTH_SHORT).show();
-                }
-            }
-        });*/
 
     }
 }

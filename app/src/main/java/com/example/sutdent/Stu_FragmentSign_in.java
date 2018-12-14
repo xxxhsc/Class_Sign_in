@@ -1,7 +1,10 @@
 package com.example.sutdent;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,7 +19,6 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.example.lmy.class_sign_in.Course;
 import com.example.lmy.class_sign_in.CourseList;
 import com.example.lmy.class_sign_in.Kouling;
 import com.example.lmy.class_sign_in.KoulingList;
@@ -29,7 +31,6 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
 
 import static cn.bmob.v3.Bmob.getApplicationContext;
@@ -40,10 +41,6 @@ public class Stu_FragmentSign_in extends Fragment{
     public BDLocationListener myListener = new MyLocationListener();
 
     private String get_address;
-    private TextView tv1;
-    private EditText input_kouling;
-    private String in_kouling;
-    private String realkouling;
     private TextView kouling_info;
     private TextView signin_view;
     private User Stuinfo;
@@ -63,8 +60,20 @@ public class Stu_FragmentSign_in extends Fragment{
         kouling_info = getActivity().findViewById(R.id.kouling_info);
         signin_view = getActivity().findViewById(R.id.signin_view);
 
-        //获取定位
-        startLocate();
+        if (Build.VERSION.SDK_INT >= 23){
+            //动态添加权限
+            if (getActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) !=PackageManager.PERMISSION_GRANTED
+                    && getActivity().checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getActivity(),"没有权限，请手动开启定位权限！",Toast.LENGTH_SHORT).show();
+                getActivity().requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},100);
+            }else { //有权限直接定位
+                //获取定位
+                startLocate();
+            }
+        }else { //低版本直接定位
+            //获取定位
+            startLocate();
+        }
 
         //显示口令信息
         showKouling();
@@ -139,11 +148,9 @@ public class Stu_FragmentSign_in extends Fragment{
                                                         continue;
                                                     }
                                                 }
-
                                             }else {
                                                 Toast.makeText(getActivity(),"还没有选择课程！",Toast.LENGTH_SHORT).show();
                                             }
-
                                         }
                                     });
 
@@ -167,8 +174,6 @@ public class Stu_FragmentSign_in extends Fragment{
         });
 
     }
-
-
 
     private void showKouling(){
         //显示口令信息
@@ -261,12 +266,6 @@ public class Stu_FragmentSign_in extends Fragment{
         @Override
         public void onReceiveLocation(BDLocation location) {
 
-
-
-            //再完善一下，根据原先很多定位方式那里，申请权限什么的
-
-
-
             if (location != null){
                 // 根据BDLocation 对象获得经纬度以及详细地址信息
                 String address = location.getAddrStr();
@@ -274,13 +273,33 @@ public class Stu_FragmentSign_in extends Fragment{
                     get_address = address;
                     // 获得位置之后停止定位
                     mLocationClient.stop();
-
                 }
 
             }else {
                 Toast.makeText(getActivity(),"无法定位！",Toast.LENGTH_SHORT).show();
                 return ;
             }
+
+        }
+    }
+
+    //申请权限的回调方法
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            //requestCode即所声明的权限获取码，在checkSelfPermission时传入
+            case 100:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    // 获取到权限，作相应处理（调用定位SDK应当确保相关权限均被授权，否则可能引起定位失败）
+                    startLocate();
+                }else {
+                    // 没有获取到权限，做特殊处理
+                    Toast.makeText(getActivity(),"获取位置权限失败，请手动开启！",Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:
+                break;
 
         }
     }
