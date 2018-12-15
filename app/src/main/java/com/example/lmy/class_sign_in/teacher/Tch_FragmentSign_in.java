@@ -1,10 +1,9 @@
-package com.example.teacher;
+package com.example.lmy.class_sign_in.teacher;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +12,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.lmy.class_sign_in.Course;
-import com.example.lmy.class_sign_in.CourseList;
-import com.example.lmy.class_sign_in.Kouling;
-import com.example.lmy.class_sign_in.KoulingList;
+import com.example.lmy.class_sign_in.javabean.Course;
+import com.example.lmy.class_sign_in.javabean.Kouling;
+import com.example.lmy.class_sign_in.javabean.KoulingList;
 import com.example.lmy.class_sign_in.R;
-import com.example.lmy.class_sign_in.User;
+import com.example.lmy.class_sign_in.javabean.User;
 
 import java.util.List;
 

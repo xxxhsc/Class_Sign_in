@@ -1,8 +1,7 @@
-package com.example.lmy.class_sign_in;
+package com.example.lmy.class_sign_in.activity;
 
 import android.content.Intent;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -17,15 +16,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.example.sutdent.Stu_MainActivity;
-import com.example.teacher.Tch_MainActivity;
+import com.example.lmy.class_sign_in.Base64Utils;
+import com.example.lmy.class_sign_in.R;
+import com.example.lmy.class_sign_in.SharedPreferencesUtils;
+import com.example.lmy.class_sign_in.javabean.User;
+import com.example.lmy.class_sign_in.sutdent.Stu_MainActivity;
+import com.example.lmy.class_sign_in.teacher.Tch_MainActivity;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 
-public class LoginActivity extends AppCompatActivity{
+public class LoginActivity extends BaseActivity{
 
     //布局内的控件
     private EditText et_name;
@@ -242,7 +245,6 @@ public class LoginActivity extends AppCompatActivity{
                 public void done(BmobUser bmobUser,BmobException e){
                     if (e==null){
                         User userInfo = BmobUser.getCurrentUser(User.class);//获取当前用户数据对象；
-
                         if(userInfo.getIdentity())
                         {
                             showToast(bmobUser.getUsername()+"登录成功！");

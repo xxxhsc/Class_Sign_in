@@ -1,4 +1,4 @@
-package com.example.sutdent;
+package com.example.lmy.class_sign_in.sutdent;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,9 +12,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.lmy.class_sign_in.LoginActivity;
+import com.example.lmy.class_sign_in.activity.LoginActivity;
 import com.example.lmy.class_sign_in.R;
-import com.example.lmy.class_sign_in.User;
+import com.example.lmy.class_sign_in.javabean.User;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
@@ -23,7 +23,9 @@ import cn.bmob.v3.listener.UpdateListener;
 
 public class Stu_FragmentInfo extends Fragment {
 
-    private TextView student_info;
+    private TextView student_info1;
+    private TextView student_info2;
+    private TextView student_info3;
     private String stu_name;
     private String stu_id;
     private String stu_real;
@@ -40,7 +42,9 @@ public class Stu_FragmentInfo extends Fragment {
         super.onActivityCreated(savedInstanceState);
         Button btn_exit = getActivity().findViewById(R.id.btn_exit);
         Button update_info = getActivity().findViewById(R.id.update_info);
-        student_info = getActivity().findViewById(R.id.student_info);
+        student_info1 = getActivity().findViewById(R.id.student_info1);
+        student_info2 = getActivity().findViewById(R.id.student_info2);
+        student_info3 = getActivity().findViewById(R.id.student_info3);
 
         //显示个人信息
         showInfo();
@@ -55,7 +59,10 @@ public class Stu_FragmentInfo extends Fragment {
                 Intent intent = new Intent(getActivity(),LoginActivity.class);
                 intent.putExtra("exit","true");
                 Toast.makeText(getActivity(),"退出登录成功！",Toast.LENGTH_SHORT).show();
-                startActivity(intent);      //跳转登录界面
+//                关闭当前的activity，并重新打开login
+                startActivity(intent);  //跳转登录界面
+                getActivity().finish();
+
             }
         });
 
@@ -111,8 +118,8 @@ public class Stu_FragmentInfo extends Fragment {
         stu_name = Stuinfo.getUsername();
         stu_id = Stuinfo.getUserid();
         stu_real = Stuinfo.getRealname();
-        student_info.setText("用户名：" + stu_name + "\n"
-                + "学号：" + stu_id + "\n"
-                + "姓名：" + stu_real + "\n");
+        student_info1.setText(stu_real);
+        student_info2.setText("工  号：" + stu_id);
+        student_info3.setText("用户名：" + stu_name);
     }
 }

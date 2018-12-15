@@ -7,12 +7,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dp_16"
-            android:text="用户名" />
+            android:text="用 户 名:"
+            android:textSize="@dimen/dp_16" />
         <EditText
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
@@ -30,8 +31,8 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="学（工）号"
-            android:textSize="@dimen/dp_16"/>
+            android:text="学/工 号:"
+            android:textSize="@dimen/dp_16" />
 
         <EditText
             android:id="@+id/tv_userid"
@@ -48,8 +49,8 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="姓名"
-            android:textSize="@dimen/dp_16"/>
+            android:text="姓       名:"
+            android:textSize="@dimen/dp_16" />
 
         <EditText
             android:id="@+id/tv_realname"

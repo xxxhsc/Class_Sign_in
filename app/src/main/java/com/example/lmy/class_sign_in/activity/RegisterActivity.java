@@ -1,7 +1,6 @@
-package com.example.lmy.class_sign_in;
+package com.example.lmy.class_sign_in.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -12,14 +11,16 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.example.sutdent.Stu_MainActivity;
-import com.example.teacher.Tch_MainActivity;
+import com.example.lmy.class_sign_in.R;
+import com.example.lmy.class_sign_in.javabean.User;
+import com.example.lmy.class_sign_in.sutdent.Stu_MainActivity;
+import com.example.lmy.class_sign_in.teacher.Tch_MainActivity;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends BaseActivity {
 
     private EditText mAccount;                        //用户名编辑
     private EditText mPwd;                            //密码编辑

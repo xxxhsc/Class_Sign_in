@@ -11,7 +11,7 @@
     android:orientation="vertical"
     android:weightSum="1"
     android:gravity="center"
-    tools:context=".RegisterActivity">
+    tools:context=".activity.RegisterActivity">
 
     <RelativeLayout
         android:layout_width="258dp"

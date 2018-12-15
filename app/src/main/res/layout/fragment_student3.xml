@@ -20,18 +20,41 @@
         />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="196dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_large"
+        android:layout_marginLeft="120dp"
         android:layout_marginRight="@dimen/margin_large"
-        android:layout_marginTop="@dimen/dp_70">
+        android:layout_marginTop="@dimen/dp_70"
+
+        android:orientation="vertical">
+
         <TextView
+            android:id="@+id/student_info1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/student_info"
-            android:textSize="@dimen/dp_16"/>
-    </LinearLayout>
+            android:gravity="center"
+            android:textSize="@dimen/dp_20"
+            />
 
+        <TextView
+            android:id="@+id/student_info2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="@dimen/dp_16"
+            android:textColor="@color/gray"/>
+
+        <TextView
+            android:id="@+id/student_info3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="@dimen/dp_16"
+            android:textColor="@color/gray"/>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/update_info"
@@ -46,7 +69,6 @@
         android:background="@drawable/btn_orange_selector"
         android:textColor="@android:color/white"
         android:textSize="@dimen/text_size_normal"/>
-
 
     <Button
         android:id="@+id/btn_exit"

@@ -1,4 +1,4 @@
-package com.example.lmy.class_sign_in;
+package com.example.lmy.class_sign_in.javabean;
 
 import cn.bmob.v3.BmobUser;
 

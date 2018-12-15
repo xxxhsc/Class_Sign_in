@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:clipToPadding="false"
     android:fitsSystemWindows="true"
-    tools:context=".sutdent.Stu_MainActivity" >
+    tools:context=".teacher.Tch_MainActivity" >
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"

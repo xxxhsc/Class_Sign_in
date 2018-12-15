@@ -1,4 +1,4 @@
-package com.example.sutdent;
+package com.example.lmy.class_sign_in.sutdent;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -19,11 +19,11 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.example.lmy.class_sign_in.CourseList;
-import com.example.lmy.class_sign_in.Kouling;
-import com.example.lmy.class_sign_in.KoulingList;
+import com.example.lmy.class_sign_in.javabean.CourseList;
+import com.example.lmy.class_sign_in.javabean.Kouling;
+import com.example.lmy.class_sign_in.javabean.KoulingList;
 import com.example.lmy.class_sign_in.R;
-import com.example.lmy.class_sign_in.User;
+import com.example.lmy.class_sign_in.javabean.User;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.sutdent;
+package com.example.lmy.class_sign_in.sutdent;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -11,10 +11,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.lmy.class_sign_in.Course;
-import com.example.lmy.class_sign_in.CourseList;
+import com.example.lmy.class_sign_in.javabean.Course;
+import com.example.lmy.class_sign_in.javabean.CourseList;
 import com.example.lmy.class_sign_in.R;
-import com.example.lmy.class_sign_in.User;
+import com.example.lmy.class_sign_in.javabean.User;
 
 import java.util.List;
 

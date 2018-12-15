@@ -1,4 +1,4 @@
-package com.example.teacher;
+package com.example.lmy.class_sign_in.teacher;
 
 
 /**
@@ -42,16 +42,17 @@ public class Tch_MainActivity extends FragmentActivity implements ViewPager.OnPa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        }
+        setContentView(R.layout.activity_stu_main);
+
         init();
         initViewPager();
 
-
     }
+
+
+
+
+
 
     private  void   initViewPager(){
         fragment_teacher1= new Tch_FragmentHome();

@@ -1,19 +1,11 @@
-package com.example.lmy.class_sign_in;
+package com.example.lmy.class_sign_in.javabean;
 
 import cn.bmob.v3.BmobObject;
 
-public class Course extends BmobObject {
-    private String coursename;
+public class CourseList extends BmobObject {
     private String courseno;
     private String teacherid;
-
-    public String getCoursename(){
-        return coursename;
-    }
-
-    public void setCoursename(String coursename){
-        this.coursename = coursename;
-    }
+    private String studentid;
 
     public String getCourseno(){
         return courseno;
@@ -29,5 +21,13 @@ public class Course extends BmobObject {
 
     public void setTeacherid(String teacherid) {
         this.teacherid = teacherid;
+    }
+
+    public String getStudentid() {
+        return studentid;
+    }
+
+    public void setStudentid(String studentid) {
+        this.studentid = studentid;
     }
 }
